@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PingPongBall : MonoBehaviour {
     private float speed = 2;
+    private bool debug_input = true;
 
 	// Use this for initialization
 	void Start () {
@@ -12,6 +13,20 @@ public class PingPongBall : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        //when kinect is not connected, using debug keyboard input
+        if(debug_input)
+        {
+            Vector3 pos = KeyboardInputBall();
+            transform.Translate(pos);
+        }
+        else
+        {
+            //real position update from kinect tracker
+        }
+    }
+
+    private Vector3 KeyboardInputBall()
+    {
         // 定义3个值控制移动
         float xm = 0, ym = 0;
         //按键盘W向上移动
@@ -32,6 +47,6 @@ public class PingPongBall : MonoBehaviour {
         {
             xm += speed * Time.deltaTime;
         }
-        transform.Translate(new Vector3(xm, ym, 0));
+        return new Vector3(xm, ym, 0);
     }
 }
