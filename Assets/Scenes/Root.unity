@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 8
+  serializedVersion: 9
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -39,6 +39,7 @@ RenderSettings:
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
   m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -54,11 +55,10 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
-    serializedVersion: 9
+    serializedVersion: 10
     m_Resolution: 2
     m_BakeResolution: 40
-    m_TextureWidth: 1024
-    m_TextureHeight: 1024
+    m_AtlasSize: 1024
     m_AO: 0
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
@@ -122,11 +122,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4446379269831078, guid: 52cdb8fc9c7669d4a8e08f37dfbf4943, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1.51
       objectReference: {fileID: 0}
     - target: {fileID: 4446379269831078, guid: 52cdb8fc9c7669d4a8e08f37dfbf4943, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.85
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4446379269831078, guid: 52cdb8fc9c7669d4a8e08f37dfbf4943, type: 2}
       propertyPath: m_LocalPosition.z
@@ -152,20 +152,25 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 54581707050590504, guid: 52cdb8fc9c7669d4a8e08f37dfbf4943,
+    - target: {fileID: 23515961372062214, guid: 52cdb8fc9c7669d4a8e08f37dfbf4943,
         type: 2}
-      propertyPath: m_Constraints
-      value: 120
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114438423804461382, guid: 52cdb8fc9c7669d4a8e08f37dfbf4943,
+        type: 2}
+      propertyPath: debug_input
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 52cdb8fc9c7669d4a8e08f37dfbf4943, type: 2}
-  m_IsPrefabParent: 0
+  m_SourcePrefab: {fileID: 100100000, guid: 52cdb8fc9c7669d4a8e08f37dfbf4943, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &1335568685
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 1335568686}
   - component: {fileID: 1335568687}
@@ -179,11 +184,11 @@ GameObject:
 --- !u!4 &1335568686
 Transform:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1335568685}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.53, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -192,7 +197,7 @@ Transform:
 --- !u!114 &1335568687
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1335568685}
   m_Enabled: 1

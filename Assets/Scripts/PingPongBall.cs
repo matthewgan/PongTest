@@ -1,22 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity;
 using MsgReceiver;
 
 public class PingPongBall : MonoBehaviour {
     private float speed = 2;
-    public bool debug_input = true;
+    public bool debug_input = false;
 
     private Receiver receiver = new Receiver();
-    private TrackInfo trackInfo;
-    
-	// Use this for initialization
-	void Start () {
-        DontDestroyOnLoad(gameObject);
+    private TrackInfo last_trackInfo;
+
+    private Vector2 real_table_min = new Vector2();
+    private Vector2 real_table_max = new Vector2();
+
+    public Vector2 virtual_table_min = new Vector2(-4.0f, -2.0f);
+    public Vector2 virtual_table_max = new Vector2(4.0f, 2.0f);
+
+
+    // Use this for initialization
+    void Start () {
+        DontDestroyOnLoad(gameObject);       
+
+        LoadConfig.LoadSettings(System.Environment.CurrentDirectory);
+
+        CalculateTablePixelRange();
 
         //start the receiver if not in debug mode
         if(debug_input != true)
         {
+            last_trackInfo = new TrackInfo();
+
             receiver = new Receiver();
             receiver.Open();
             receiver.MsgRecieved += UpdateTrackInfo;
@@ -34,7 +48,9 @@ public class PingPongBall : MonoBehaviour {
         else
         {
             //real position update from kinect tracker
-            transform.Translate(TrackInfoTransformToGame(trackInfo));
+            var pos = TrackInfoTransformToGame(last_trackInfo);
+            //Debug.Log(pos);
+            transform.position = pos;
         }
     }
 
@@ -67,14 +83,14 @@ public class PingPongBall : MonoBehaviour {
     {
         if (ValidateTrackInfo(e.track))
         {
-            trackInfo = e.track;
+            last_trackInfo = e.track;
         }
     }
 
     private bool ValidateTrackInfo(TrackInfo info)
     {
         //if all ball info equals to zero then its not valid
-        if((info.ball_X_px == 0) && (info.ball_Y_px==0) && (info.ball_Z_mm==0))
+        if((info.ball_X_px == 0) && (info.ball_Y_px==0) && (info.ball_Z_m==0))
         {
             return false;
         }
@@ -87,12 +103,20 @@ public class PingPongBall : MonoBehaviour {
     private Vector3 TrackInfoTransformToGame(TrackInfo info)
     {
         Vector3 pos = new Vector3();
-        //need calibration
-        //todo
-        pos.x = info.ball_X_px;
-        pos.y = info.ball_Y_px;
-        pos.z = 0;//fixed for now
+        //need calibration from setting file
+        //get table size in the setting file
+        pos.x = (info.ball_X_px - real_table_min.x) * (virtual_table_max.x - virtual_table_min.x) / (real_table_max.x - real_table_min.x) + virtual_table_min.x;
+        pos.y = virtual_table_max.y - (info.ball_Y_px - real_table_min.y) * (virtual_table_max.y - virtual_table_min.y) / (real_table_max.y - real_table_min.y);
+        pos.z = 0;
 
         return pos;
+    }
+
+    private void CalculateTablePixelRange()
+    {
+        real_table_min.x = Mathf.Min(LoadConfig.gameSettings.pingpong_table_tl[0], LoadConfig.gameSettings.pingpong_table_bl[0]);
+        real_table_min.y = Mathf.Min(LoadConfig.gameSettings.pingpong_table_tl[1], LoadConfig.gameSettings.pingpong_table_tr[1]);
+        real_table_max.x = Mathf.Max(LoadConfig.gameSettings.pingpong_table_tr[0], LoadConfig.gameSettings.pingpong_table_br[0]);
+        real_table_max.y = Mathf.Max(LoadConfig.gameSettings.pingpong_table_bl[1], LoadConfig.gameSettings.pingpong_table_br[1]);
     }
 }

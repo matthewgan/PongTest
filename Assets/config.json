@@ -1,0 +1,9 @@
+{
+    "enable_debug": 0,
+    "yellow_hsv_min": [5, 50, 50],
+    "yellow_hsv_max": [150, 255, 255],
+    "pingpong_table_tl": [224, 119],
+    "pingpong_table_tr": [774, 117],
+    "pingpong_table_br": [779, 433],
+    "pingpong_table_bl": [213, 428]
+}
